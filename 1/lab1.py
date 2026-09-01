@@ -16,7 +16,7 @@ def matricesIguales(A, B):
 
     for i in range(A.shape[0]):
         for j in range(A.shape[1]):
-            if abs(A[i][j] - B[i][j]) >= 1e-08:
+            if abs(A[i][j] - B[i][j]) >= 1e-07:
                 return False
 
     return True

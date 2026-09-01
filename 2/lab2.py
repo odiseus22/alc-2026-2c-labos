@@ -1,14 +1,15 @@
 import numpy as np
-import math
+
 
 def rota(theta):
     """
     Recibe un angulo theta y retorna una matriz de 2x2
     que rota un vector dado en un angulo theta
     """
+    c, s = np.cos(theta), np.sin(theta)
     res =np.array([
-        [math.cos(theta), -math.sin(theta)],
-        [math.sin(theta),  math.cos(theta)]
+        [c, -s],
+        [s,  c]
     ])
     return res
 
