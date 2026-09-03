@@ -1,7 +1,7 @@
 import numpy as np
 
 
-def rota(theta):
+def rota(theta):  
     """
     Recibe un angulo theta y retorna una matriz de 2x2
     que rota un vector dado en un angulo theta
@@ -20,7 +20,11 @@ def escala(s):
     La matriz escala la componente i de un vector de Rn
     en un factor s[i]
     """
-    res = np.diag(s)
+    tam = len(s)
+    res = np.zeros((tam,tam))
+    
+    for i in range(tam):
+        res[i][i] = s[i]
     return res
 
 
@@ -57,9 +61,7 @@ def trans_afin(v,theta,s,b):
     v
     """
     transf = afin(theta,s,b)
-
     vectorCon1 =  np.append(v, 1)
-    vectorColumna = vectorCon1.T
-    vectorColumnaRes = transf@vectorColumna
-    res = vectorColumnaRes.T[:2]
+    vectorColumnaRes = transf@vectorCon1 #3x3 3x1 -> 3x1 dimensiones
+    res = vectorColumnaRes[:2]
     return res
