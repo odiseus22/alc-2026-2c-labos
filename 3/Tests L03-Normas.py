@@ -1,10 +1,15 @@
 # Tests L03-Normas
+import numpy as np
+from lab3 import norma, normaliza, normaMatMC, normaExacta, condMC, condExacto
+
 
 # Tests norma
 assert(np.allclose(norma(np.array([1,1]),2),np.sqrt(2)))
 assert(np.allclose(norma(np.array([1]*10),2),np.sqrt(10)))
 assert(norma(np.random.rand(10),2)<=np.sqrt(10))
 assert(norma(np.random.rand(10),2)>=0)
+assert(np.allclose(norma(np.array([2]*3),'inf'),2))
+assert(np.allclose(norma(np.array([2]*3),2),3.46410161514))
 
 # Tests normaliza
 # Tests normaliza
@@ -46,14 +51,14 @@ A = np.array([[1,1],[0,1]])
 A_ = np.linalg.solve(A,np.eye(A.shape[0]))
 normaA = normaMatMC(A,2,2,10000)
 normaA_ = normaMatMC(A_,2,2,10000)
-condA = condMC(A,2,10000)
+condA = condMC(A,2)
 assert(np.allclose(normaA[0]*normaA_[0],condA,atol=1e-3))
 
 A = np.array([[3,2],[4,1]])
 A_ = np.linalg.solve(A,np.eye(A.shape[0]))
 normaA = normaMatMC(A,2,2,10000)
 normaA_ = normaMatMC(A_,2,2,10000)
-condA = condMC(A,2,10000)
+condA = condMC(A,2)
 assert(np.allclose(normaA[0]*normaA_[0],condA,atol=1e-3))
 
 # Test condExacta
