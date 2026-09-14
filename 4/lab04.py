@@ -140,17 +140,17 @@ def calculaLDV(A):
     
     return L, D, V
 
-def esSDP(A, atol=1e-8):
+def esSDP(A, atol=1e-10):
     if A is None:
-        return None
+        return False
         
     try:
         Ac = np.array(A, dtype=float)
     except:
-        return None
+        return False
         
     if Ac.ndim != 2 or Ac.shape[0] != Ac.shape[1]:
-        return None
+        return False
 
     n = Ac.shape[0]
     
@@ -158,20 +158,19 @@ def esSDP(A, atol=1e-8):
     for i in range(n):
         for j in range(i + 1, n):
             if np.abs(Ac[i, j] - Ac[j, i]) > atol:
-                return None
+                return False
                 
     # 2. Factorización LDV
     res = calculaLDV(Ac)
     if res is None or res[0] is None:
-        return None
+        return False
         
     L, D, V = res
     
     # 3. Chequear si los elementos de la diagonal son estrictamente mayores a cero
     for i in range(n):
-        if D[i, i] <= -atol:
+        # Si un elemento en la diagonal es menor o igual a 0 (considerando atol como margen de error para el cero), no es Positiva
+        if D[i, i] <= atol:
             return False
-        if abs(D[i, i]) <= atol:
-            return None 
             
     return True
