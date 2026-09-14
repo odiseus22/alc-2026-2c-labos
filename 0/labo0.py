@@ -63,11 +63,13 @@ def traza(a):
 
 def traspuesta(a):
     filas, columnas = a.shape
-    result = [[0 for _ in range(filas)] for _ in range(columnas)]
-    result = np.array(result)
+    # Inicializamos la matriz llena de ceros, PERO le aclaramos que sea de tipo float
+    # para que al guardarle decimales no te los redondee a enteros.
+    result = np.zeros((columnas, filas), dtype=float)
+    
     for fila in range(filas):
         for columna in range(columnas): 
-            result[columna][fila] = a [fila][columna]
+            result[columna][fila] = a[fila][columna]
     return result  
 
 def restar(a, b):
