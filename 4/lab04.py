@@ -11,6 +11,19 @@ def traspuesta(a):
         for columna in range(columnas): 
             result[columna][fila] = a[fila][columna]
     return result  
+
+def esCuadrada(a):
+    return a.ndim == 2 and a.shape[0] == a.shape[1]
+
+def esSimetrica(a,atol=1e-8):
+    if not esCuadrada(a) :
+        return False
+    n = len(a)
+    for i in range(n):
+        for j in range(i + 1, n):
+            if np.abs(a[i][j] - a[j][i]) > atol:
+                return False
+    return True
 #fin auxiliar
 
 
@@ -128,27 +141,37 @@ def calculaLDV(A):
     return L, D, V
 
 def esSDP(A, atol=1e-8):
-    n = A.shape[0]
+    if A is None:
+        return None
+        
+    try:
+        Ac = np.array(A, dtype=float)
+    except:
+        return None
+        
+    if Ac.ndim != 2 or Ac.shape[0] != Ac.shape[1]:
+        return None
+
+    n = Ac.shape[0]
     
     # 1. Chequear si es simétrica
     for i in range(n):
         for j in range(i + 1, n):
-            if np.abs(A[i, j] - A[j, i]) > atol:
-                return False
+            if np.abs(Ac[i, j] - Ac[j, i]) > atol:
+                return None
                 
     # 2. Factorización LDV
-    res = calculaLDV(A)
-    if res[0] is None:
-        return False
+    res = calculaLDV(Ac)
+    if res is None or res[0] is None:
+        return None
         
     L, D, V = res
     
     # 3. Chequear si los elementos de la diagonal son estrictamente mayores a cero
     for i in range(n):
-        if D[i, i] <= 0:
+        if D[i, i] <= -atol:
             return False
+        if abs(D[i, i]) <= atol:
+            return None 
             
     return True
-
-
-    
