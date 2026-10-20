@@ -151,7 +151,7 @@ def QR_con_HH(A,tol=1e-12,extras=False):
         alpha = -signo(x[0]) * norma(x, 2)
         
         #definimos u perpendicular al espejo
-        #columna x -  normaNegativa* primer canonico con dimension (m-k+1)
+        #columna x -  normaSignoAlternado* primer canonico con dimension (m-k+1)
         u = x - alpha* np.eye(filas-k)[0]
         norma_u = norma(u,2)
         if norma_u > tol: #si no lo es, no lo procesamos, ya habia ceros debajo de la diagonal, pasamos a sig columna

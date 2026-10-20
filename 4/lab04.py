@@ -81,7 +81,7 @@ def res_tri(L, b, inferior=True):
             x[i] = (b[i] - suma) / L[i, i]
     else:
         # Sustitución hacia atrás (Backward substitution)
-        for i in range(n - 1, -1, -1):
+        for i in range(n - 1, -1, -1): #inicio incluido, fin sin incluir osea lo haces pasarse 1, paso decrecer de a 1
             if L[i,i] == 0:
                 return None
             suma = 0
